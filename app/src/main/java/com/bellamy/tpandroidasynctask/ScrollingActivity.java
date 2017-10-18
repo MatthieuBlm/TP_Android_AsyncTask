@@ -2,21 +2,16 @@ package com.bellamy.tpandroidasynctask;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -43,6 +38,8 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ExtandedOperation ext = new ExtandedOperation(ScrollingActivity.this, ((ProgressBar)findViewById(R.id.progressBar)));
+
+                // Lance la simulation de l'opération
                 ext.execute();
             }
         });
@@ -53,17 +50,17 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     LoadExtandedImage imageLoader = new LoadExtandedImage();
+
+                    // Charge l'image
                     imageLoader.execute(new URL("https://i.ytimg.com/vi/1UvEZPA_YzY/maxresdefault.jpg"));
 
+                    // Récupère l'image
                     Bitmap img = imageLoader.get();
 
+                    // Affiche l'image
                     ((ImageView) view.getRootView().findViewById(R.id.extanded_imageview)).setImageBitmap(img);
 
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -75,6 +72,7 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Multiplier multiplier = new Multiplier(ScrollingActivity.this, ((ProgressBar) findViewById(R.id.progressBar2)));
 
+                // Récupération du tableau d'integer
                 String [] listNumber = (((TextView) view.getRootView().findViewById(R.id.list_number)).getText()+"").split(" ");
 
                 Integer [] listNumberInt = new Integer[listNumber.length];
@@ -83,6 +81,7 @@ public class ScrollingActivity extends AppCompatActivity {
                     listNumberInt[i] = Integer.parseInt(listNumber[i]);
                 }
 
+                // Lance le calcul
                 multiplier.execute(listNumberInt);
             }
         });
